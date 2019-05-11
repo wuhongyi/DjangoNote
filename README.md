@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 3月 19 03:27:05 2019 (+0800)
-;; Last-Updated: 四 3月 21 07:13:09 2019 (+0800)
+;; Last-Updated: 六 5月 11 21:53:06 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 6
+;;     Update #: 7
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -28,6 +28,10 @@ django-admin startproject daqonline
 
 python manage.py createsuperuser
 
+
+## 开启
+
+python manage.py
 
 ## 介绍
 
