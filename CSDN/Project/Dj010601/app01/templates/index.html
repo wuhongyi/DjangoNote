@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+        }
+        #title{
+            width:100%;
+            height:100px;
+            background-color: yellowgreen;
+            font-size:30px;
+            line-height: 100px;
+        }
+        #div01,#div02{
+            width:1200px;
+            height:100px;
+            background-color: lightblue;
+            margin:5px auto;
+            font-size: 26px;
+            line-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="title">模板语言变量传值</div>
+    <div id="div01">当前用户：{{ user }}</div>
+    <div id="div02">传递多个值：</div>
+</body>
+</html>

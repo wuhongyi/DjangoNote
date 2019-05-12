@@ -1,0 +1,29 @@
+{%  load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>youku首页</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<body>
+    <div id="title">
+        <div>
+            <div id="left">优酷首页</div>
+            <div id="right">
+                {% if type == '1' %}
+                    欢迎您！{{ user }}[普通会员]
+                {% elif type == '2' %}
+                    欢迎您！{{ user }}[高级会员]
+                {% elif type == '3' %}
+                    欢迎您！{{ user }}[管理员]
+                {% else %}
+                     <a href = "{% url 'login' %}">登录</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <div id="bigpic"><img src="{% static "img/index.png" %}"></div>
+</body>
+</html>

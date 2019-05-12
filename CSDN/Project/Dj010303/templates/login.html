@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统登录</title>
+    <!--加载外部的CSS文件-->
+    <link type="text/css" rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link type="text/css" rel="stylesheet" href="{% static "css/basic.css" %}">
+    <!--加载外部的js文件-->
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script src="{% static "js/login.js" %}"></script>
+
+</head>
+<body>
+    <div class="container">
+		<div id = "login">
+			<form class="form">
+                <h2><img src="{% static "img/django.jpg" %}"></h2>
+				<h2>培训管理系统登陆</h2>
+				<hr>
+				<hr>
+				<div class="form-group">
+					<label for="user">用户名：</label>
+					<input type="text" class="form-control" placeholder="请输入用户名" id="user">
+				</div>
+				<div class="form-group">
+					<label for="password">密码：</label>
+					<input type="password" class="form-control" placeholder="请输入密码" id="password">
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox">请记住我
+						</label>
+					</div>
+				</div>
+				 <button id="submit01" class="form-control" >提交</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

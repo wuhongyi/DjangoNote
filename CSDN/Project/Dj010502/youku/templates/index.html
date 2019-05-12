@@ -1,0 +1,18 @@
+{%  load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>youku首页</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<body>
+    <div id="title">
+        <div>
+            <div id="left">优酷首页</div>
+            <div id="right"><a href = "{% url 'login' %}">登录</a></div>
+        </div>
+    </div>
+    <div id="bigpic"><img src="{% static "img/index.png" %}"></div>
+</body>
+</html>

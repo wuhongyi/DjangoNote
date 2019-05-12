@@ -1,0 +1,26 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+#bigimg{
+    width:100%;
+    height: 460px;
+}
+#bigimg>div{
+    width:1200px;
+    height: 460px;
+    margin: auto;
+}
+#content01{
+    width: 100%;
+    height: 500px;
+}
+#content01>div{
+    width: 1200px;
+    height: 500px;
+    margin:10px auto;
+    background-color:lightcyan;
+    font-size:30px;
+    text-align: center;
+    color:red;
+}

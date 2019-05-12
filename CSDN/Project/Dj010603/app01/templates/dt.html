@@ -1,0 +1,103 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息</title>
+    <link type="text/css" rel="stylesheet"  href="{% static 'css/bootstrap.min.css' %}">
+    <!-- 导入DataTable的CSS文件 -->
+    <link type="text/css" rel="stylesheet"  href="{% static 'extranal/datatables/css/jquery.dataTables.css' %}">
+    <!-- 导入DataTable的js文件 -->
+    <script src="{% static 'extranal/datatables/js/jquery.js' %}"></script>
+    <script src="{% static 'extranal/datatables/js/jquery.dataTables.js' %}"></script>
+
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+        }
+        #title{
+            width:100%;
+            height: 100px;
+            background-color: yellowgreen;
+            font-size:36px;
+            line-height: 100px;
+            padding-left: 50px;
+        }
+        #content{
+            width:1200px;
+            height: 800px;
+            margin:50px auto;
+            background-color: lightcyan;
+
+        }
+        table>thead>tr{
+            background-color: yellowgreen;
+        }
+    </style>
+    <script>
+        $(document).ready( function () {
+            $('#student').DataTable({
+                language: {
+                    "sProcessing": "处理中...",
+                    "sLengthMenu": "显示 _MENU_ 项结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix": "",
+                    "sSearch": "搜索:",
+                    "sUrl": "",
+                    "sEmptyTable": "表中数据为空",
+                    "sLoadingRecords": "载入中...",
+                    "sInfoThousands": ",",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上页",
+                        "sNext": "下页",
+                        "sLast": "末页"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": 以升序排列此列",
+                        "sSortDescending": ": 以降序排列此列"
+                    }
+                }
+            });
+        } );
+    </script>
+</head>
+<body>
+    <div id="title">使用DataTable展示学员信息</div>
+    <div id="content">
+        <!--table class="table table-striped table-bordered table-hover"-->
+        <table class="table table-striped table-hover table-bordered" id="student">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>出生日期</th>
+                    <th>手机号码</th>
+                    <th>邮箱地址</th>
+                    <th>家庭住址</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td style="background-color: navy;color:#FFF">{{ forloop.counter }}</td>
+                        <td>{{ student.sno }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.gender }}</td>
+                        <td>{{ student.birthday }}</td>
+                        <td>{{ student.mobile }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.address }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

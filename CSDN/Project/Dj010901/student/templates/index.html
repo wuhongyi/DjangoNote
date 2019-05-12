@@ -1,0 +1,64 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/index.basic.css' %}">
+
+</head>
+<body>
+    <div id="header_outer">
+        <div id="header_container">
+            <div id="left">
+                <div><img src="{% static 'img/logo.png' %}"></div>
+                <div>学员详情</div>
+            </div>
+            <div id="right">
+                {% if username == None %}
+                    <a href="{% url 'login' %}">登录</a>
+                {% else %}
+                    欢迎您，{{ username|capfirst }} | <a href="{% url 'home' %}"> 注销 </a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <div id="query_container">
+        <form action="" method="post">
+            <div style="line-height: 40px;">学号：</div>
+            <div><input type="text" id="sno" name="sno" value="{{ querysno }}" class="form-control" style="width:100px;margin-right: 20px;"></div>
+            <div style="line-height: 40px;">姓名：</div>
+            <div><input type="text" id="name"  class="form-control" style="width:100px;margin-right: 20px"></div>
+            <div style="line-height: 40px;">手机号码：</div>
+            <div><input type="text" id="mobile"  class="form-control" style="width:150px;margin-right: 20px"></div>
+            <div style="line-height: 40px;">邮箱地址：</div>
+            <div><input type="text" id="email" class="form-control" style="width:200px;margin-right: 20px"></div>
+            <div><input type='submit' class="btn" value="查询" id="getresult" style="width:80px;margin-left: 120px;background-color: navy;color:#FFF"></div>
+            <div><input type='submit' class="btn" value="全部" id="getall" style="width:80px;margin-left: 20px;background-color: navy;color:#FFF"></div>
+        </form>
+    </div>
+    <div id="content_container" class="container">
+        {% for student in students %}
+             <div class="col-lg-2 col-sm-3 col-xs-4">
+                <div class="thumbnail">
+                    {% if student.gender == '男' %}
+                        <a href="{% url 'detail' %}?sno={{ student.sno}}&username={{ username }}"><img src="{% static 'img/boy.png'%}"></a>
+                    {% elif student.gender == '女' %}
+                        <a href="{% url 'detail' %}?sno={{ student.sno }}&username={{ username }}"><img src="{% static 'img/girl.png'%}"></a>
+                    {% endif %}
+
+                    <div style="text-align: center"><h4><a href="{% url 'detail' %}?sno={{ student.sno }}&username={{ username }}">{{ student.name }}-{{ student.sno }}</a></h4></div>
+                    <p></p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <div id="footer_container">
+        学生信息管理系统v1.10 @ 版权所有 Steven Wang
+    </div>
+</body>
+</html>

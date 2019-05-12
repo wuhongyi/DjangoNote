@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    优酷首页
+{% endblock %}
+{% block css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+{% endblock %}
+
+
+{% block img %}
+    <div id="bigimg">
+        <div><img src="{% static 'img/index.png' %}"></div>
+    </div>
+{% endblock %}
+{% block content01 %}
+    <div id="content01">
+        <div>首页的内容</div>
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学员信息页面</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<body>
+    <div id="header_container">
+        <div>
+            <div><img src="{% static 'img/logo.png' %}"></div>
+            <div>学员信息</div>
+        </div>
+    </div>
+    <div id="query_container">
+        <form action="{% url 'home' %}" method="post">
+            <div style="line-height: 40px;">学号：</div>
+            <div><input type="text" id="sno" name="sno" class="form-control" style="width:100px;margin-right: 20px;"></div>
+            <div style="line-height: 40px;">姓名：</div>
+            <div><input type="text" id="name"  class="form-control" style="width:100px;margin-right: 20px"></div>
+            <div style="line-height: 40px;">手机号码：</div>
+            <div><input type="text" id="mobile"  class="form-control" style="width:150px;margin-right: 20px"></div>
+            <div style="line-height: 40px;">邮箱地址：</div>
+            <div><input type="text" id="email" class="form-control" style="width:200px;margin-right: 20px"></div>
+            <div><input type='submit' class="btn" value="查询" id="getresult" style="width:80px;margin-left: 120px;background-color: navy;color:#FFF"></div>
+            <div><input type='submit' class="btn" value="全部" id="getall" style="width:80px;margin-left: 20px;background-color: navy;color:#FFF"></div>
+        </form>
+    </div>
+
+    <div id="content_container">
+         <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>出生日期</th>
+                    <th>手机号码</th>
+                    <th>邮箱地址</th>
+                    <th>家庭住址</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td style="background-color: navy;color:#FFF">{{ forloop.counter }}</td>
+                        <td>{{ student.sno }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.gender }}</td>
+                        <td>{{ student.birthday }}</td>
+                        <td>{{ student.mobile }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.address }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="footer_container">
+        学生信息管理系统v1.10 @ 版权所有 Steven Wang
+    </div>
+</body>
+</html>

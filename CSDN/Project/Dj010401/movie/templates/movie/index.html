@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>youku电影</title>
+    <style>
+        body{
+            padding: 0px;
+            margin: 0px;
+        }
+        #title{
+            width:100%;
+            height: 100px;
+            background-color: yellowgreen;
+            font-size: 32px;
+            font-weight: bold;
+            padding-left: 20px;
+            line-height: 100px;
+        }
+        #bigpic {
+            height: 460px;
+            width:1200px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="title">电影首页</div>
+    <div id="bigpic"><img src="{% static "movie/img/big.png" %}"></div>
+</body>
+</html>

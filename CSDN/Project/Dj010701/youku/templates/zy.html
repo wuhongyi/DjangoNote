@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优酷首页</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<body>
+    <!-- 导入页面的头部 --- header.html  -->
+    {% include 'header.html' with pageindex='3' %}
+    <!-- 中间部分--首页自己的数据   -->
+    <div id="bigimg">
+        <div><img src="{% static 'img/zy.png' %}"></div>
+    </div>
+    <div id="content01">
+        <div>综艺的具体内容！</div>
+    </div>
+    <!-- 导入页面的页脚 --- footer.html  -->
+    {% include 'footer.html' %}
+</body>
+</html>

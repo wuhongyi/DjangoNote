@@ -1,0 +1,47 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优酷电影</title>
+    <style>
+        body{
+            padding: 0px;
+            margin: 0px;
+        }
+        #header_container{
+            width:100%;
+            height:50px;
+            background-color: lightgrey;
+        }
+        #header_container>div{
+            width:1200px;
+            height: 50px;
+            margin: auto;
+        }
+        #header_container>div>div{
+            float:left
+        }
+        #detail{
+            margin-left: 20px;
+            line-height: 50px;
+        }
+        #content{
+            width:1200px;
+            height:460px;
+            margin:auto;
+        }
+    </style>
+</head>
+<body>
+     <div id="header_container">
+        <div>
+            <div><a href="/"><img src="{% static "yk-logo-1220.png" %}"></a></div>
+            <div id="detail">电影首页</div>
+        </div>
+    </div>
+    <div id="content">
+        <img src="{% static "movie.png" %}">
+    </div>
+</body>
+</html>
