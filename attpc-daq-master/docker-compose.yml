@@ -1,0 +1,133 @@
+# docker-compose.yml
+# ==================
+#
+# This file describes the Docker containers that make up the app. For more information about the
+# individual elements, see https://docs.docker.com/compose/compose-file.
+#
+# Some containers expect an environment file to be provided. This should have the following entries:
+#
+#     DAQ_IS_PRODUCTION=True   <-- Tells the system to use the production settings, rather than debug.
+#     POSTGRES_USER=[something]   <-- A user name for the PostgreSQL database. Set it to something reasonable.
+#     POSTGRES_PASSWORD=[something]  <-- A secure, random password that you will not likely need to remember.
+#     POSTGRES_DB=attpcdaq  <-- The name of the database for PostgreSQL,
+#     DAQ_SECRET_KEY=[something]  <-- A secure, *STRONG* random string for Django's cryptography tools.
+#
+# Since this environment file has passwords and secret tokens in it, **NEVER PUT IT ON GITHUB!**
+
+version: "2"
+
+services:
+  # This container holds the PostgreSQL database where the DAQ GUI's internal configuration is stored.
+  db:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - "5432"
+    networks:
+      - daq
+    env_file:
+      - ./production.env
+    volumes:
+      - "$HOME/DAQ_Database:/var/lib/postgresql/data"
+
+  # This container provides the communication service for the Celery task queue
+  rabbitmq:
+    image: rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672"
+    networks:
+      - daq
+    env_file:
+      - ./production.env
+
+  web:
+    # This container runs the Django app, which provides the dynamic content of the website.
+    image: attpc/attpcdaq
+    restart: unless-stopped
+    build: ./web
+    expose:
+      - "8000"
+    volumes:
+      - static:/usr/src/app/static
+      - doc:/usr/src/app/doc/_build/html/
+      - $HOME/.ssh/:/root/.ssh/
+    networks:
+      - daq
+    env_file:
+      - ./production.env
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - CELERY_BROKER_HOST=rabbitmq
+      - CELERY_BROKER_PORT=5672
+    depends_on:
+      - db
+    command: ['/bin/bash', './django_entrypoint.sh']
+
+  celery:
+    # Celery is a task queue server. This allows non-blocking communication with the ECC servers.
+    image: attpc/attpcdaq
+    restart: unless-stopped
+    build: ./web
+    env_file:
+      - ./production.env
+    volumes:
+      - $HOME/.ssh/:/root/.ssh/
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - CELERY_BROKER_HOST=rabbitmq
+      - CELERY_BROKER_PORT=5672
+    networks:
+      - daq
+    depends_on:
+      - rabbitmq
+      - web
+    command: ['/bin/bash', './celery_entrypoint.sh']
+
+  flower:
+    # Provides a management GUI for the Celery queue
+    image: attpc/attpcdaq
+    restart: unless-stopped
+    env_file:
+      - ./production.env
+    ports:
+      - "8081:5555"
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - CELERY_BROKER_HOST=rabbitmq
+      - CELERY_BROKER_PORT=5672
+    networks:
+      - daq
+    depends_on:
+      - rabbitmq
+      - web
+    command: ['/bin/bash', './flower_entrypoint.sh']
+
+  nginx:
+    # The nginx container serves the static resources and proxies all of the requests to Django.
+    # This is what you will connect to with your browser. The port is listed below, and can be changed as needed.
+    image: attpc/nginx
+    restart: unless-stopped
+    build: ./nginx
+    ports:
+      - "8080:8080"  # Format is "[external]:[internal]"
+    networks:
+      - daq
+    volumes:
+      - static:/www/static
+      - doc:/www/doc
+    depends_on:
+      - web
+
+networks:
+  daq:
+    driver: bridge
+
+volumes:
+  static:
+    driver: local
+  doc:
+    driver: local

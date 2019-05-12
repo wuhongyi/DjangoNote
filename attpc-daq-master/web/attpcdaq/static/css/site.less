@@ -1,0 +1,309 @@
+@import 'https://fonts.googleapis.com/css?family=Lato:300,400,400i,700';
+
+@top-navbar-height: 50px;
+@navcolor: #222733;
+//@sidebar-color: #404040;
+@bgcolor: lighten(@navcolor, 78%);
+@titlecolor: #555555;
+
+@color-idle: #34495e;
+@color-described: #9b59b6;
+@color-prepared: #5f63b4;
+@color-ready: #3498db;
+@color-running: #23c153;
+@color-error: #e74c3c;
+@color-reset: #f28027;
+
+.button-variant(@color; @background; @border) {
+  // Stolen from Bootstrap's file "less/mixins/buttons.less"
+  color: @color;
+  background-color: @background;
+  border-color: @border;
+
+  &:focus,
+  &.focus {
+    color: @color;
+    background-color: darken(@background, 10%);
+        border-color: darken(@border, 25%);
+  }
+  &:hover {
+    color: @color;
+    background-color: darken(@background, 10%);
+        border-color: darken(@border, 12%);
+  }
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    color: @color;
+    background-color: darken(@background, 10%);
+        border-color: darken(@border, 12%);
+
+    &:hover,
+    &:focus,
+    &.focus {
+      color: @color;
+      background-color: darken(@background, 17%);
+          border-color: darken(@border, 25%);
+    }
+  }
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &:hover,
+    &:focus,
+    &.focus {
+      background-color: @background;
+          border-color: @border;
+    }
+  }
+
+  .badge {
+    color: @background;
+    background-color: @color;
+  }
+}
+
+
+
+.shadow() {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.20);
+}
+
+
+body {
+  padding-top: 10px;
+  background-color: @bgcolor;
+  font-family: "Lato", "Helvetica", "Arial", sans-serif;
+}
+
+.navbar-default {
+  background-color: @bgcolor;
+  margin-bottom: 10px;
+}
+
+#run-control-toolbar {
+    display: inline-block;
+}
+
+.navbar.navbar-default {
+  border-radius: 0;
+  height: @top-navbar-height;
+  border: none;
+
+  .navbar-nav > .open > a,
+  .navbar-nav > .open > a:focus,
+  .navbar-nav > .open > a:hover {
+    background-color: lighten(@bgcolor, 5%);
+  }
+}
+
+.sidebar-app-name {
+  font-size: 160%;
+  height: @top-navbar-height + 10;
+  color: white;
+  margin: -10px -20px 10px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.login-app-name {
+  font-size: 180%;
+  padding-bottom: 20px;
+  color: black;
+  text-align: center;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 10px 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: @navcolor;
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+
+
+  li > a {
+      padding-right: 20px;
+      padding-left: 20px;
+      color: lighten(@navcolor, 50%);
+  }
+
+  li:hover, li > a:hover {
+    background-color: @navcolor;
+    border: none;
+    color: white;
+  }
+
+  .active {
+      a, a:hover, a:active {
+        color: white;
+        background-color: @navcolor;
+      }
+  }
+}
+
+.nav-sidebar-subnav {
+  .nav-sidebar;
+  padding-left: 50px;
+}
+
+.panel {
+  border: none;
+  border-radius: 5px;
+  .shadow;
+}
+
+.panel-default {
+  .panel-heading {
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-weight: 300;
+    color: @titlecolor;
+    font-size: 120%;
+  }
+}
+
+.panel-status {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  vertical-align: middle;
+
+  .status-text {
+    font-size: 200%;
+    font-weight: 300;
+    color: white;
+    display: inline;
+    position: relative;
+  }
+
+  .status-icon {
+    display: inline;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    font-size: 60px;
+    opacity: 0.3;
+    color: white;
+  }
+}
+
+.icon-btn,
+a > .icon-btn {
+  color: black;
+}
+
+.icon-btn:hover,
+a > .icon-btn:hover {
+  color: hsl(0, 0, 0.5);
+}
+
+.label-idle,
+.bg-color-idle {
+  background-color: @color-idle;
+}
+
+.label-described,
+.bg-color-described {
+  background-color: @color-described;
+}
+
+.btn-describe {
+  .button-variant(white; @color-described; darken(@color-described, 5%));
+}
+
+.label-prepared,
+.bg-color-prepared {
+  background-color: @color-prepared;
+}
+
+.btn-prepare {
+  .button-variant(white; @color-prepared; darken(@color-prepared, 5%));
+}
+
+.label-ready,
+.bg-color-ready {
+  background-color: @color-ready;
+}
+
+.btn-configure {
+  .button-variant(white; @color-ready; darken(@color-ready, 5%));
+}
+
+.label-running,
+.bg-color-running {
+  background-color: @color-running;
+}
+
+.btn-start {
+  .button-variant(white; @color-running; darken(@color-running, 5%));
+}
+
+.label-error,
+.bg-color-error {
+  background-color: @color-error;
+}
+
+.btn-stop {
+  .button-variant(white; @color-error; darken(@color-error, 5%));
+}
+
+.btn-reset {
+  .button-variant(white; @color-reset; darken(@color-reset, 5%));
+}
+
+.login-page {
+  background-color: @navcolor;
+}
+
+.center-on-page() {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#login-panel {
+  width: 400px;
+  height: 300px;
+  padding: 10px 20px;
+  .center-on-page;
+}
+
+#measurement-chart {
+  overflow: scroll;
+}
+
+.drag-handle, .drag-handle:hover {
+    cursor: move;
+}
+
+.table > tbody > tr.dragging {
+  background-color: white;
+  border: none;
+  border-radius: 0;
+  .shadow;
+
+  td, th {
+    border: none;
+  }
+}
