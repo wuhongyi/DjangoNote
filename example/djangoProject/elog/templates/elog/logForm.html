@@ -1,0 +1,206 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <title>HiRA elog</title>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js//popper.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/GenieStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script>
+      $(document).ready(function(){
+        var applyChange = function() {
+          var scaler1 = $('input[name=scaler1]').val();
+          var scaler2 = $('input[name=scaler2]').val();
+          var scaler3 = $('input[name=scaler3]').val();
+          $('input[name=calc1]').attr('placeholder', scaler3/scaler1);
+          $('input[name=calc2]').attr('placeholder', scaler3/scaler2);
+          $('input[name=calc3]').attr('placeholder', scaler2/scaler1);
+        };
+
+        applyChange();
+
+        $('input[name=scaler1]').keyup(applyChange);
+        $('input[name=scaler2]').keyup(applyChange);
+        $('input[name=scaler3]').keyup(applyChange);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-sm-center">
+        <div class="col-sm-10">
+          <h1>Add a new log</h1>
+        </div>
+      </div>
+      <form action="{% url 'elog:addLog' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group row justify-content-sm-center">
+          <div class="col-sm-5" style="text-align:left">
+            <a href="{% url 'elog:index' %}"><button type="button" class="btn btn-secondary btn-sm">Back</button></a>
+          </div>
+          <div class="col-sm-5" style="text-align:right">
+            <input type="submit" class="btn btn-primary btn-sm" value="Submit a new log">
+          </div>
+        </div>
+        <div class="form-row justify-content-sm-center">
+          <div class="form-group col-sm-2">
+            <label for="runNumber">Run number</label>
+            <input type="number" class="form-control form-control-sm" name="runNumber" {% if prevLog %} value="{{ prevLog.run_number }}" {% endif %} required>
+          </div>
+          <div class="form-group col-sm-3">
+            <label for="startTime">Start time</label>
+            <input type="text" class="form-control form-control-sm" id="startTime" placeholder="Submission time filled automatically" readonly>
+          </div>
+          <div class="form-group col-sm-3">
+            <label for="stopTime">Stop time</label>
+            <input type="text" class="form-control form-control-sm" id="stopTime" placeholder="Submission time filled automatically" readonly>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="runLength">Run length</label>
+            <input type="text" class="form-control form-control-sm" id="runLength" placeholder="Not applicable" readonly>
+          </div>
+        </div>
+        <div class="form-row justify-content-sm-center">
+          <div class="form-group col-sm-2">
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="fc73">FC73</label>
+            <div class="form-row">
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="fc73Begin" step="0.00001" value="{% if prevLog %}{{ prevLog.fc73_begin }}{% else %}0{% endif %}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="fc73End" step="0.00001" value="{% if prevLog %}{{ prevLog.fc73_end }}{% else %}0{% endif %}">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="fc74">FC74</label>
+            <div class="form-row">
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="fc74Begin" step="0.00001" value="{% if prevLog %}{{ prevLog.fc74_begin }}{% else %}0{% endif %}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="fc74End" step="0.00001" value="{% if prevLog %}{{ prevLog.fc74_end }}{% else %}0{% endif %}">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="fc75">FC75</label>
+            <div class="form-row">
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="fc75Begin" step="0.00001" value="{% if prevLog %}{{ prevLog.fc75_begin }}{% else %}0{% endif %}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="fc75End" step="0.00001" value="{% if prevLog %}{{ prevLog.fc75_end }}{% else %}0{% endif %}">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-2">
+          </div>
+        </div>
+        <div class="form-row justify-content-sm-center">
+          <div class="form-group col-sm-2">
+            <label for="scribe">Scribe</label>
+            <input type="text" class="form-control form-control-sm" name="scribe" {% if prevLog %}value="{{ prevLog.scribe }}"{% endif %} required>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="d1">D1</label>
+            <div class="form-row">
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="d1Begin" step="0.00001" value="{% if prevLog %}{{ prevLog.d1_begin }}{% else %}0{% endif %}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="d1End" step="0.00001" value="{% if prevLog %}{{ prevLog.d1_end }}{% else %}0{% endif %}">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="d2">D2</label>
+            <div class="form-row">
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="d2Begin" step="0.00001" value="{% if prevLog %}{{ prevLog.d2_begin }}{% else %}0{% endif %}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="d2End" step="0.00001" value="{% if prevLog %}{{ prevLog.d2_end }}{% else %}0{% endif %}">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="icGasPressure">S800 IC Gas Pressure</label>
+            <div class="form-row">
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="icGasPressureBegin" step="0.0001" value="{% if prevLog %}{{ prevLog.ic_gas_pressure_begin }}{% else %}0{% endif %}">
+              </div>
+              <div class="col">
+                <input type="number" class="form-control form-control-sm" name="icGasPressureEnd" step="0.0001" value="{% if prevLog %}{{ prevLog.ic_gas_pressure_end }}{% else %}0{% endif %}">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-sm-2">
+          </div>
+        </div>
+        <div class="form-row justify-content-sm-center">
+          <div class="form-group col-sm-2">
+            <label for="runType">Run type</label>
+            <select class="form-control form-control-sm" name="runType">
+              <option value="-1">----</option>
+              {% for runTypeText in runTypeTextList %}
+              <option value={{ forloop.counter0 }} {% if prevLog and prevLog.run_type == forloop.counter0 %} selected {% endif %}>{{ runTypeText }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="triggerType">Trigger type</label>
+            <select class="form-control form-control-sm" name="triggerType">
+              <option value="-1">----</option>
+              {% for triggerTypeText in triggerTypeTextList %}
+              <option value={{ forloop.counter0 }} {% if prevLog and prevLog.trigger_type == forloop.counter0 %} selected {% endif %}>{{ triggerTypeText }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-sm-1">
+            <label for="scaler1">OBJ Scint</label>
+            <input type="number" class="form-control form-control-sm" name="scaler1" step="1" {% if prevLog %}value="{{ prevLog.scaler1 }}"{% endif %}>
+          </div>
+          <div class="form-group col-sm-1">
+            <label for="scaler2">XFP Scint</label>
+            <input type="number" class="form-control form-control-sm" name="scaler2" step="1" {% if prevLog %}value="{{ prevLog.scaler2 }}"{% endif %}>
+          </div>
+          <div class="form-group col-sm-1">
+            <label for="scaler3">Red&Blue</label>
+            <input type="number" class="form-control form-control-sm" name="scaler3" step="1" {% if prevLog %}value="{{ prevLog.scaler3 }}"{% endif %}>
+          </div>
+          <div class="form-group col-sm-1">
+            <label for="calc1">R&B/OBJ</label>
+            <input type="text" class="form-control form-control-sm" name="calc1" placeholder="" readonly>
+          </div>
+          <div class="form-group col-sm-1">
+            <label for="calc2">R&B/XFP</label>
+            <input type="text" class="form-control form-control-sm" name="calc2" placeholder="" readonly>
+          </div>
+          <div class="form-group col-sm-1">
+            <label for="calc3">XFP/OBJ</label>
+            <input type="text" class="form-control form-control-sm" name="calc3" placeholder="" readonly>
+          </div>
+        </div>
+        <div class="form-row justify-content-sm-center">
+          <div class="form-group col-sm-10">
+            <label for="title">Title</label>
+            <input type="text" class="form-control form-control-sm" name="title" {% if prevLog %} value="{{ prevLog.title }}" {% endif %}>
+          </div>
+        </div>
+        <div class="form-row justify-content-sm-center">
+          <div class="form-group col-sm-10">
+            <label for="note">Note</label>
+            <textarea class="form-control form-control-sm" name="note" rows="5">{% if prevLog %}{{ prevLog.note }}{% endif %}</textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

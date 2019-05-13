@@ -1,0 +1,110 @@
+{% load static %}
+{% load elog_extras %}
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <title>HiRA elog</title>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js//popper.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/GenieStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </head>
+  <script>
+    jQuery(document).ready(function($) {
+      $('table').on('click', 'tbody', function(){
+        $('table').find('tbody').removeClass('selected');
+        $(this).addClass('selected');
+          window.location = $(this).data("href");
+      });
+
+      var currentNumData;
+      $.get("{% url 'elog:numData' %}", function( data ) {
+          currentNumData = data;
+      });
+
+      var auto_refresh = setInterval(function () {
+        $.get("{% url 'elog:numData' %}", function( data ) {
+          if (currentNumData != data) {
+            $(location).attr('href', '{% if request.path == '/elog/' %}{% url 'elog:index' %}{% else %}{% url 'elog:indexRunTypeSorted' %}{% endif %}');
+          }
+        });
+      }, 5000);
+    });
+  </script>
+  <style>
+    tbody:hover tr { background-color: #eee;  }
+    tbody.selected tr { background-color: #eee; }
+  </style>
+  <body>
+    <div class="container-fluid">
+      <p><h1>HiRA elog - e18015</h1></p>
+      <p align="center">
+      <a href="{% url 'elog:logForm' %}" class="btn btn-success btn-sm">Add new log</a>
+      <a href="{% url 'elog:logFormWithPrev' %}" class="btn btn-info btn-sm">Add log with the last entry</a>
+      <a href="" class="btn btn-primary btn-sm">Reload</a>
+      </p>
+      <table class="tableMargin table table-hover table-sm">
+        <thead>
+          <tr class="bg-success">
+            <th scope="col" width="80px"><a href="{% url 'elog:index' %}" style="color:black">Run#{% if request.path == '/elog/' %} ▼{% endif %}</a></td>
+            <th scope="col" width="100px">Start time</td>
+            <th scope="col" width="100px">Stop time</td>
+            <th scope="col" width="110px">Run length</td>
+            <th scope="col" width="120px"><a href="{% url 'elog:indexRunTypeSorted' %}" style="color:black">Run type{% if request.path == '/elog/sortRunType/' %} ▼{% endif %}</a></td>
+            <th scope="col" width="120px">Trigger</td>
+<!--            <th scope="col" width="80px">FC73</td> -->
+<!--            <th scope="col" width="80px">FC74</td> -->
+            <th scope="col" width="80px">FC75</td>
+            <th scope="col" width="80px">D1</td>
+            <th scope="col" width="80px">D2</td>
+            <th scope="col" width="80px">IC Gas P</td>
+            <th scope="col" width="85px">XFP Scint</td>
+            <th scope="col" width="85px">OBJ Scint</td> <!-- SWAP 1-->
+            <th scope="col" width="85px">RED&BLUE</td>
+            <th scope="col" width="85px">OBJ/XFP</td>
+            <th scope="col" width="85px">R&B/OBJ</td>
+            <th scope="col" width="85px">R&B/XFP</td>
+        
+            <th scope="col">Title</td>
+          </tr>
+        </thead>
+          {% for logEntry in logs %}
+        <tbody data-href="{% url 'elog:logDetail' logEntry.pk %}">
+          <tr>
+            <th scope="row" rowspan="2" class="align-middle">{{ logEntry.run_number }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.start_time|date:"m/d H:i" }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.stop_time|date:"m/d H:i" }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.getDuration }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.getRunType }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.getTriggerType }}</td>
+<!--            <td>{{ logEntry.fc73_begin }}</td> -->
+<!--            <td>{{ logEntry.fc74_begin }}</td> -->
+            <td>{{ logEntry.fc75_begin }}</td>
+            <td>{{ logEntry.d1_begin|floatformat:4 }}</td>
+            <td>{{ logEntry.d2_begin|floatformat:4 }}</td>
+            <td>{{ logEntry.ic_gas_pressure_begin }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.scaler2 }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.scaler1 }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.scaler3 }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.scaler1|div:logEntry.scaler2|floatformat:4 }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.scaler3|div:logEntry.scaler1|floatformat:4 }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.scaler3|div:logEntry.scaler2|floatformat:4 }}</td>
+            <td rowspan=2 class="align-middle">{{ logEntry.title|truncatechars:110 }}</td>
+          </tr>
+          <tr>
+<!--            <td>{{ logEntry.fc73_end }}</td> -->
+<!--            <td>{{ logEntry.fc74_end }}</td> -->
+            <td>{{ logEntry.fc75_end }}</td>
+            <td>{{ logEntry.d1_end|floatformat:4 }}</td>
+            <td>{{ logEntry.d2_end|floatformat:4 }}</td>
+            <td>{{ logEntry.ic_gas_pressure_end }}</td>
+          </tr>
+        </tbody>
+          {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>

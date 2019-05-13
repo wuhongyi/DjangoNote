@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 一 5月 13 09:46:49 2019 (+0800)
-;; Last-Updated: 一 5月 13 12:56:10 2019 (+0800)
+;; Last-Updated: 一 5月 13 21:22:10 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # settings
@@ -47,6 +47,46 @@ TEMPLATES = [
     },
 ]
 ```
+
+
+```python
+LANGUAGE_CODE = 'en-us'
+
+LANGUAGE_CODE = 'zh-hans'
+```
+
+
+
+```python
+#0时区
+TIME_ZONE = 'UTC'
+
+#中国时区
+TIME_ZONE = 'Asia/Shanghai'
+
+
+
+#Django如果开启了Time Zone功能，则所有的存储和内部处理，甚至包括直接print显示全都是UTC的。只有通过模板进行表单输入/渲染输出的时候，才会执行UTC本地时间的转换。
+#所以建议后台处理时间的时候，最好完全使用UTC，不要考虑本地时间的存在。而显示时间的时候，也避免手动转换，尽量使用Django模板系统代劳。
+#启用 USE_TZ = True 后，处理时间方面，有两条 “黄金法则”：
+#    保证存储到数据库中的是 UTC 时间；
+#    在函数之间传递时间参数时，确保时间已经转换成 UTC 时间；
+
+#比如，通常获取当前时间用的是：
+import datetime
+now = datetime.datetime.now()
+
+#启用 USE_TZ = True 后，需要写成：
+import datetime 
+from django.utils.timezone import utc
+utcnow = datetime.datetime.utcnow().replace(tzinfo=utc)
+
+#除非应用支持用户设置自己所在的时区，通常我们不需要关心模板的时区问题。模板在展示时间的时候，会使用 settings.TIME_ZONE 中的设置自动把 UTC 时间转成 settings.TIME_ZONE 所在时区的时间渲染。
+TIME_ZONE = 'Asia/Shanghai'
+```
+
+
+
 
 
 ```python

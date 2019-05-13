@@ -1,0 +1,239 @@
+{% load static %}
+{% load elog_extras %}
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <title>HiRA elog</title>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js//popper.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/GenieStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/highcharts.js' %}"></script>
+    <script>
+      jQuery(document).ready(function($) {
+        var currentNumData;
+        $.get("{% url 'elog:numData' %}", function( data ) {
+            currentNumData = data;
+        });
+  
+        var auto_refresh = setInterval(function () {
+          $.get("{% url 'elog:numData' %}", function( data ) {
+            if (currentNumData != data) {
+              window.location.reload();
+            }
+          });
+        }, 5000);
+      });
+  
+      document.addEventListener('DOMContentLoaded', function () {
+        Highcharts.chart('scalerRatios', {
+          chart: {
+            type: 'line'
+          },
+          title: {
+            text: 'Scaler ratios (last 30 runs)'
+          },
+          xAxis: {
+            type: 'number',
+            title: {
+              text: 'Run number'
+            }
+          },
+          yAxis: {
+            type: 'number',
+            title: {
+              text: 'Ratios'
+            }
+          },
+
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: false
+              },
+              enableMouseTracking: true
+            }
+          },
+
+          colors: ['#FF0000', '#00FF00', '#0000FF', '#036', '#000'],
+
+          series: [{
+            name: "OBJ/XFP",
+            data: [
+              {% for entry in logs|slice:":30" %}
+              [{{ entry.run_number }}, {{ entry.scaler1|div:entry.scaler2|floatformat:4 }}]{% if forloop.counter0 < 30 %},{% endif %}
+              {% endfor %}
+            ]},{
+            name: "R&B/OBJ",
+            data: [
+              {% for entry in logs|slice:":30" %}
+              [{{ entry.run_number }}, {{ entry.scaler3|div:entry.scaler1|floatformat:4 }}]{% if forloop.counter0 < 30 %},{% endif %}
+              {% endfor %}
+            ]},{
+            name: "R&B/XFP",
+            data: [
+              {% for entry in logs|slice:":30" %}
+              [{{ entry.run_number }}, {{ entry.scaler3|div:entry.scaler2|floatformat:4 }}]{% if forloop.counter0 < 30 %},{% endif %}
+              {% endfor %}
+            ]
+          }]
+        });
+        Highcharts.chart('gasPressure', {
+          chart: {
+            type: 'line'
+          },
+          title: {
+            text: 'IC Gas Pressure (last 30 runs)'
+          },
+          xAxis: {
+            type: 'number',
+            title: {
+              text: 'Run number'
+            }
+          },
+          yAxis: {
+            type: 'number',
+            title: {
+              text: 'Pressure [torr]'
+            }
+          },
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: false
+              },
+              enableMouseTracking: true
+            }
+          },
+
+          colors: ['#FF0000', '#00FF00', '#0000FF', '#036', '#000'],
+
+          series: [{
+            name: "IC Gas Pressure (begin)",
+            data: [
+              {% for entry in logs|slice:":30" %}
+              [{{ entry.run_number }}, {{ entry.ic_gas_pressure_begin }}]{% if forloop.counter0 < 30 %},{% endif %}
+              {% endfor %}
+            ]
+          }]
+        });
+
+        Highcharts.chart('scalerRatiosAll', {
+          chart: {
+            type: 'line'
+          },
+          title: {
+            text: 'Scaler ratios (All runs)'
+          },
+          xAxis: {
+            type: 'number',
+            title: {
+              text: 'Run number'
+            }
+          },
+          yAxis: {
+            type: 'number',
+            title: {
+              text: 'Ratios'
+            }
+          },
+
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: false
+              },
+              enableMouseTracking: true
+            }
+          },
+
+          colors: ['#FF0000', '#00FF00', '#0000FF', '#036', '#000'],
+
+          series: [{
+            name: "OBJ/XFP",
+            data: [
+              {% for entry in logs %}
+              [{{ entry.run_number }}, {{ entry.scaler1|div:entry.scaler2|floatformat:4 }}]{% if not forloop.last %},{% endif %}
+              {% endfor %}
+            ]},{
+            name: "R&B/OBJ",
+            data: [
+              {% for entry in logs %}
+              [{{ entry.run_number }}, {{ entry.scaler3|div:entry.scaler1|floatformat:4 }}]{% if not forloop.last %},{% endif %}
+              {% endfor %}
+            ]},{
+            name: "R&B/XFP",
+            data: [
+              {% for entry in logs %}
+              [{{ entry.run_number }}, {{ entry.scaler3|div:entry.scaler2|floatformat:4 }}]{% if not forloop.last %},{% endif %}
+              {% endfor %}
+            ]
+          }]
+        });
+
+        Highcharts.chart('gasPressureAll', {
+          chart: {
+            type: 'line'
+          },
+          title: {
+            text: 'IC Gas Pressure (All runs)'
+          },
+          xAxis: {
+            type: 'number',
+            title: {
+              text: 'Run number'
+            }
+          },
+          yAxis: {
+            type: 'number',
+            title: {
+              text: 'Pressure [torr]'
+            }
+          },
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: false
+              },
+              enableMouseTracking: true
+            }
+          },
+
+          colors: ['#FF0000', '#00FF00', '#0000FF', '#036', '#000'],
+
+          series: [{
+            name: "IC Gas Pressure (begin)",
+            data: [
+              {% for entry in logs %}
+              [{{ entry.run_number }}, {{ entry.ic_gas_pressure_begin }}]{% if not forloop.last %},{% endif %}
+              {% endfor %}
+            ]
+          }]
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-sm-center">
+        <div class="col">
+          <div id="scalerRatios" style="width:100%; height:350px;"></div>
+        </div>
+        <div class="col">
+          <div id="gasPressure" style="width:100%; height:350px;"></div>
+        </div>
+      </div>
+      <div class="row justify-content-sm-center">
+        <div class="col">
+          <div id="scalerRatiosAll" style="width:100%; height:350px;"></div>
+        </div>
+        <div class="col">
+          <div id="gasPressureAll" style="width:100%; height:350px;"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
