@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 一 5月 13 09:51:57 2019 (+0800)
-;; Last-Updated: 一 5月 13 10:10:12 2019 (+0800)
+;; Last-Updated: 一 5月 13 16:26:29 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 4
 ;; URL: http://wuhongyi.cn -->
 
 # views
@@ -27,6 +27,8 @@ def student(request):
 ```
 
 
+## 页面跳转
+
 ```python
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -40,6 +42,41 @@ def index(request): # 首页
     else:
         # 跳转到登录页
         return redirect("/login/")
+```
+
+## NAME
+
+```python
+from django.shortcuts import render
+from django.shortcuts import redirect
+from django.shortcuts import reverse
+
+def index(request):
+    """
+    优酷首页
+    :param request: 
+    :return: 
+    """
+    # http://127.0.0.1:8000/?username=alice
+    # 获取username
+    username = request.GET.get('username')
+    if username:
+        return render(request, 'index.html')
+    else:
+        return redirect(reverse('login'))
+
+def zy(request):
+    username = request.GET.get('username')
+    if username:
+        return render(request, 'zy.html')
+    else:
+        return redirect(reverse('login'))
+
+
+def denglu(request):
+    return render(request, 'denglu.html')
+
+
 ```
 
 

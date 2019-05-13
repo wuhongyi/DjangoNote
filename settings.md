@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 一 5月 13 09:46:49 2019 (+0800)
-;; Last-Updated: 一 5月 13 09:50:47 2019 (+0800)
+;; Last-Updated: 一 5月 13 12:56:10 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 1
+;;     Update #: 2
 ;; URL: http://wuhongyi.cn -->
 
 # settings
@@ -57,6 +57,7 @@ STATIC_URL = '/static/'
 
 
 ```python
+# 在文件的最后面添加以下内容，添加文件路径
 # STATICFILES_DIRS --- 全局变量定义了存储静态文件集合
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

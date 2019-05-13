@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 一 5月 13 09:55:18 2019 (+0800)
-;; Last-Updated: 一 5月 13 10:02:28 2019 (+0800)
+;; Last-Updated: 一 5月 13 13:29:35 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 2
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # HTML
@@ -18,7 +18,7 @@
 
 ----
 
-添加图片
+## 添加图片等
 ```html
 <div><img src="{% static "imgs/stu04.jpg" %}"></div>
 ```
@@ -35,7 +35,8 @@
 
 
 
-循环显示数据
+## 循环显示数据
+
 ```html
 <tbody>
     {% for student in allstudent %}
@@ -51,5 +52,41 @@
     {% endfor %}
 </tbody>
 ```
+
+
+## 链接跳转
+
+```html
+<div id="header_container">
+    <div>
+        <div><img src="{% static "yk-logo-1220.png" %}"></div>
+        <div>
+            <ul>
+                 <li><a href="/tv/">剧集</a></li>
+                 <li><a href="/movie/">电影</a></li>
+                 <li><a href="/zy/">综艺</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="content">
+    <img src="{% static "index.png" %}">
+</div>
+```
+
+```html
+<div id="header_container">
+    <div>
+        <div><a href="/"><img src="{% static "yk-logo-1220.png" %}"></a></div>
+        <div id="detail">电影首页</div>
+    </div>
+</div>
+<div id="content">
+    <img src="{% static "movie.png" %}">
+</div>
+```
+
+
+
 
 <!-- html.md ends here -->
