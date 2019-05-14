@@ -1,6 +1,6 @@
 celery==3.1.23
 flower
-Django==1.10
+Django==1.11.18
 django-crispy-forms==1.6.0
 gunicorn==19.6.0
 paramiko==2.0.2
