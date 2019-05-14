@@ -1,0 +1,11 @@
+SNO,SName,Sage,Sex,MobileNO,StuEMail
+95001,Alice,32,女,13482034096,Alice@contoso.com
+95002,Bob,25,男,13305104593,Bob@163.com
+95003,张明,23,男,13305104345,zhangming@Gmail.com
+95004,胡小光,34,男,13305104322,Huxiaoguang@sohu.com
+95005,赵庆余,25,男,18721675210,stoim@Gmail.com
+95006,王进,32,男,13482034096,it.wangjin@Gamil.com
+95007,汤小霞,23,女,13311198045,tangxiaoxia@sina.com
+95008,周娟,28,女,13305104322,Zhoujuan@163.com
+95009,陈鹏,25,男,13801754092,chenpeng@163.com
+95010,陈小川,,女,13768023485,chengxc@sohu.com

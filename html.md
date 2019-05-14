@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 一 5月 13 09:55:18 2019 (+0800)
-;; Last-Updated: 一 5月 13 13:29:35 2019 (+0800)
+;; Last-Updated: 二 5月 14 22:01:12 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 5
+;;     Update #: 8
 ;; URL: http://wuhongyi.cn -->
 
 # HTML
@@ -15,6 +15,14 @@
 ```html
 {% load staticfiles %}
 ```
+
+模板语言两种重要符号：
+```
+{{{   }}}
+
+{%    %}
+```
+
 
 ----
 
@@ -33,9 +41,12 @@
 <script src="{% static "js/login.js" %}"></script>
 ```
 
+## if判断
 
 
-## 循环显示数据
+
+
+## for循环
 
 ```html
 <tbody>
@@ -86,7 +97,28 @@
 </div>
 ```
 
+## NAME
 
+```html
+{%  load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>youku首页</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<body>
+    <div id="title">
+        <div>
+            <div id="left">优酷首页</div>
+            <div id="right"><a href = "{% url 'login' username='Alice' password="88888888" %}">登录</a></div>
+        </div>
+    </div>
+    <div id="bigpic"><img src="{% static "img/index.png" %}"></div>
+</body>
+</html>
+```
 
 
 <!-- html.md ends here -->

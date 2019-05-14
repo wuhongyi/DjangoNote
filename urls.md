@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 一 5月 13 09:44:51 2019 (+0800)
-;; Last-Updated: 一 5月 13 16:26:29 2019 (+0800)
+;; Last-Updated: 二 5月 14 21:21:03 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 4
+;;     Update #: 5
 ;; URL: http://wuhongyi.cn -->
 
 # URLS
@@ -40,6 +40,27 @@ urlpatterns = [
     path('signin/', youku_views.denglu, name='login'),
 ]
 ```
+
+```python
+from django.contrib import admin
+from django.urls import path
+from youku import views as youku_views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', youku_views.index, name='home'),
+    # URL传值
+    path('movie_detail01/<movie_id>/', youku_views.movie_detail01, name='movie_detail01'),
+    # URL查询字符串传值
+    path('movie_detail02/', youku_views.movie_detail02, name='movie_detail02'),
+    # 登录的URL
+    path('login/<username>/<password>/', youku_views.login, name='login'),
+    # 带有模板的首页
+    path('index01/', youku_views.index01, name='index01')
+]
+```
+
+
 
 
 ## 多APP

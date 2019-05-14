@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 3月 19 03:27:05 2019 (+0800)
-;; Last-Updated: 一 5月 13 21:22:41 2019 (+0800)
+;; Last-Updated: 一 5月 13 21:24:40 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 14
+;;     Update #: 15
 ;; URL: http://wuhongyi.cn -->
 
 # README
@@ -27,7 +27,7 @@ python3 -m django --version
 
 创建项目:
 ```bash
-django-admin startproject daqonline
+django-admin startproject xxxxxx
 ```
 
 确认 Django 项目是否真的创建成功:

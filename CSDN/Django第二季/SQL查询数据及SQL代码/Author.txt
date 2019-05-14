@@ -1,0 +1,11 @@
+AuthorID,AuthorName,AuthorAge,AuthorCity,AuthorTelNo,AuthorEMail,AuthorWorkAddress
+1001,戴有炜,52,台湾台北,02-28612354,Services@hpb.tw,台北市阳明山建业路73 巷 8 号
+1002,谢蓉,45,北京,010-63583215,xierong@163.com,北京市宣武区右安门西街8号
+1003,陈新仁,48,江苏南京,025-45671432,chenrx@Gmail.com,南京市中山北路38号
+1004,谢朝阳,45,广东广州,020-56745689,xiezhaoyang@sohu.com,广州市东山路48号
+1005,刘军,38,四川成都,028-96754389,liujun@yahoo.com.cn,成都市嵩山路48号
+1006,樊玲,34,福建福州,0591-34245671,fanning@hotmail.com,福州市建设路98号511室
+1007,刘淑颖,42,陕西西安,0577-34244534,liusy@163.com,西安市长许路777号
+1008,李明志,56,浙江杭州,0571-35469120,limz@sohu.com,杭州市西溪路25号
+1009,郎咸平,52,上海,021-34140924,xianlp@china.com.cn,上海市黄浦区淮海路45号
+1010,郝建设,34,上海,021-34140542,haojianshe@sina.com.cn,上海市徐汇区漕宝路1433号
