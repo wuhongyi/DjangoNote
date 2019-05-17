@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 一 5月 13 09:55:18 2019 (+0800)
-;; Last-Updated: 四 5月 16 22:06:24 2019 (+0800)
+;; Last-Updated: 五 5月 17 21:09:12 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 13
+;;     Update #: 14
 ;; URL: http://wuhongyi.cn -->
 
 # HTML
@@ -376,7 +376,339 @@ DataTables 展示数据
 ```
 
 
+## 模板的使用
 
+header
+```html
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优酷</title>
+    <style>
+        body{
+            padding: 0px;
+            margin: 0px;
+        }
+        #header_container{
+            width:100%;
+            height:50px;
+            background-color: lightgrey;
+        }
+        #header_container>div{
+            width:1200px;
+            height: 50px;
+            margin: auto;
+        }
+        #header_container>div>div{
+            float:left
+        }
+         #header_container>div>div>ul,li{
+             list-style:none;
+             padding:0;
+             margin:0
+         }
+        #header_container>div>div>ul>li{
+            width:100px;
+            height: 50px;
+            float: left;
+            font-size:18px;
+            line-height: 50px;
+            text-align: center;
+        }
+        #content{
+            width:1200px;
+            height:460px;
+            margin:auto;
+        }
+        #header_container>div>div>ul>li>a{
+            display: block;
+            height: 50px;
+            text-decoration: none;
+            color:#000;
+        }
+        #header_container>div>div>ul>li>a:hover{
+            background-color: navy;
+            color:white;
+            font-weight: bold;
+        }
+    </style>
+    <!-- 导入jquery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script>
+        // 取出传递进来的pageindex
+        page ={{ pageindex }};
+        $(function(){
+           //判断
+            if(page===0){
+               $("#page0").css('background-color',"#FFF") ;
+               $("#page0").css('border-bottom',"5px solid blue");
+            } else if (page===1){
+               $("#page1").css('background-color',"#FFF") ;
+               $("#page1").css('border-bottom',"5px solid blue");
+            } else if (page===2){
+               $("#page2").css('background-color',"#FFF") ;
+               $("#page2").css('border-bottom',"5px solid blue");
+            } else if (page===3){
+               $("#page3").css('background-color',"#FFF") ;
+               $("#page3").css('border-bottom',"5px solid blue");
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="header_container">
+        <div>
+            <div><a href="{% url 'home' %}" ><img src="{% static "img/yk-logo-1220.png" %}"></a></div>
+            <div>
+                <ul>
+                     <li><a id='page0' href="{% url 'home' %}">首页</a></li>
+                     <li><a id='page1' href="{% url 'tv' %}">剧集</a></li>
+                     <li><a id='page2' href="{% url 'movie' %}">电影</a></li>
+                     <li><a id='page3' href="{% url 'zy' %}">综艺</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+```
+
+footer
+```{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>footer</title>
+    <style>
+        body{
+            margin: 0px;
+            padding:0px;
+        }
+        #container{
+            width:100%;
+            height: 300px;
+            background-color: rgb(246,247,251);
+        }
+        #container>div{
+            width:1200px;
+            height:260px ;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div>
+            <img src="{% static 'img/footer.png' %}">
+        </div>
+    </div>
+</body>
+</html>html
+
+```
+
+页面主题内容
+```html
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优酷首页</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<body>
+    <!-- 导入页面的头部 --- header.html  -->
+    {% include 'header.html' with pageindex='0' %}
+    <!-- 中间部分--首页自己的数据   -->
+    <div id="bigimg">
+        <div><img src="{% static 'img/index.png' %}"></div>
+    </div>
+    <div id="content01">
+        <div>首页的具体内容！</div>
+    </div>
+    <!-- 导入页面的页脚 --- footer.html  -->
+    {% include 'footer.html' %}
+</body>
+</html>
+```
+
+```html
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优酷首页</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+</head>
+<body>
+    <!-- 导入页面的头部 --- header.html  -->
+    {% include 'header.html' with pageindex=data.pageindex %}
+    <!-- 中间部分--首页自己的数据   -->
+    <div id="bigimg">
+        <div><img src="{% static data.img %}"></div>
+    </div>
+    <div id="content01">
+        <div>{{ data.content }}</div>
+    </div>
+    <!-- 导入页面的页脚 --- footer.html  -->
+    {% include 'footer.html' %}
+</body>
+</html>
+```
+
+模板的继承,通过block来标记
+
+```html
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+    <style>
+        body{
+            padding: 0px;
+            margin: 0px;
+        }
+        #header_container{
+            width:100%;
+            height:50px;
+            background-color: lightgrey;
+        }
+        #header_container>div{
+            width:1200px;
+            height: 50px;
+            margin: auto;
+        }
+        #header_container>div>div{
+            float:left
+        }
+         #header_container>div>div>ul,li{
+             list-style:none;
+             padding:0;
+             margin:0
+         }
+        #header_container>div>div>ul>li{
+            width:100px;
+            height: 50px;
+            float: left;
+            font-size:18px;
+            line-height: 50px;
+            text-align: center;
+        }
+        #header_container>div>div>ul>li>a{
+            display: block;
+            height: 50px;
+            text-decoration: none;
+            color:#000;
+        }
+        #header_container>div>div>ul>li>a:hover{
+            background-color: navy;
+            color:white;
+            font-weight: bold;
+        }
+         #footer_container{
+            width:100%;
+            height: 300px;
+            background-color: rgb(246,247,251);
+        }
+        #footer_container>div{
+            width:1200px;
+            height:260px ;
+            margin: auto;
+        }
+    </style>
+    {% block css %}
+
+    {% endblock %}
+    {% block js %}
+
+    {% endblock %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script>
+         // 取出传递进来的pageindex
+        page ={{ pageindex }};
+        $(function(){
+           //判断
+            if(page===0){
+               $("#page0").css('background-color',"#FFF") ;
+               $("#page0").css('border-bottom',"5px solid blue");
+            } else if (page===1){
+               $("#page1").css('background-color',"#FFF") ;
+               $("#page1").css('border-bottom',"5px solid blue");
+            } else if (page===2){
+               $("#page2").css('background-color',"#FFF") ;
+               $("#page2").css('border-bottom',"5px solid blue");
+            } else if (page===3){
+               $("#page3").css('background-color',"#FFF") ;
+               $("#page3").css('border-bottom',"5px solid blue");
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="header_container">
+        <div>
+            <div><a href="{% url 'home' %}" ><img src="{% static "img/yk-logo-1220.png" %}"></a></div>
+            <div>
+                <ul>
+                     <li><a id='page0' href="{% url 'home' %}">首页</a></li>
+                     <li><a id='page1' href="{% url 'tv' %}">剧集</a></li>
+                     <li><a id='page2' href="{% url 'movie' %}">电影</a></li>
+                     <li><a id='page3' href="{% url 'zy' %}">综艺</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% block img %}
+
+    {% endblock %}
+    {% block content01 %}
+
+    {% endblock %}
+    <div id="footer_container">
+        <div>
+            <img src="{% static 'img/footer.png' %}">
+        </div>
+    </div>
+</body>
+
+</html>
+```
+
+```html
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    优酷首页
+{% endblock %}
+{% block css %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/basic.css' %}">
+{% endblock %}
+
+
+{% block img %}
+    <div id="bigimg">
+        <div><img src="{% static 'img/index.png' %}"></div>
+    </div>
+{% endblock %}
+{% block content01 %}
+    <div id="content01">
+        <div>首页的内容</div>
+    </div>
+{% endblock %}
+```
 
 
 

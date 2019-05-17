@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 一 5月 13 09:51:57 2019 (+0800)
-;; Last-Updated: 四 5月 16 21:22:14 2019 (+0800)
+;; Last-Updated: 五 5月 17 21:09:12 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 6
+;;     Update #: 7
 ;; URL: http://wuhongyi.cn -->
 
 # views
@@ -161,6 +161,51 @@ def index05(request):
     # 传递一个对象
     alice = Student('98008','张三','男','1998-9-8')
     return render(request, 'index05.html', context={'student': alice})
+```
+
+## 模板的使用
+
+```python
+from django.shortcuts import render
+
+data = {
+    'index': {'pageindex':'0', 'img':'img/index.png', 'content':"===首页的具体内容==="},
+    'tv': {'pageindex': '1', 'img': 'img/tv.png', 'content': "===电视剧的具体内容==="},
+    'movie': {'pageindex': '2', 'img': 'img/movie.png', 'content': "===电影的具体内容==="},
+    'zy': {'pageindex': '3', 'img': 'img/zy.png', 'content': "===综艺的具体内容==="},
+}
+
+def index(request):
+    return render(request, 'index.html',context={'data': data["index"]})
+
+def tv(request):
+    return render(request, 'index.html',context={'data': data["tv"]})
+
+def movie(request):
+    return render(request, 'index.html',context={'data': data["movie"]})
+
+def zy(request):
+    return render(request, 'index.html',context={'data': data["zy"]})
+```
+
+
+```python
+from django.shortcuts import render
+
+def base(request):
+    return render(request, 'base.html')
+
+def index(request):
+    return render(request, 'index.html', context={'pageindex':'0'})
+
+def tv(request):
+    return render(request, 'tv.html', context={'pageindex':'1'})
+
+def movie(request):
+    return render(request, 'movie.html', context={'pageindex':'2'})
+
+def zy(request):
+    return render(request, 'zy.html', context={'pageindex':'3'})
 ```
 
 
