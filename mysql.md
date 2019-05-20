@@ -4,9 +4,9 @@
 ;; Author: Hongyi Wu(吴鸿毅)
 ;; Email: wuhongyi@qq.com 
 ;; Created: 二 5月 14 22:24:21 2019 (+0800)
-;; Last-Updated: 日 5月 19 15:06:08 2019 (+0800)
+;; Last-Updated: 日 5月 19 16:18:44 2019 (+0800)
 ;;           By: Hongyi Wu(吴鸿毅)
-;;     Update #: 8
+;;     Update #: 11
 ;; URL: http://wuhongyi.cn -->
 
 # MySQL
@@ -95,7 +95,115 @@ SHOW COLUMNS FROM 数据表;
 SHOW INDEX FROM 数据表;
 ```
 
+**插入数据**
+
+如果数据是字符型，必须使用单引号或者双引号，如："value"。
+```
+INSERT INTO table_name ( field1, field2,...fieldN )
+                       VALUES
+                       ( value1, value2,...valueN );
+```
+
+**查询数据**
+
+```
+SELECT column_name,column_name
+FROM table_name
+[WHERE Clause]
+[LIMIT N][ OFFSET M]
+```
+
+- ELECT 命令可以读取一条或者多条记录。
+- 可以使用星号（*）来代替其他字段，SELECT语句会返回表的所有字段数据
+- 可以使用 WHERE 语句来包含任何条件。
+- 可以使用 LIMIT 属性来设定返回的记录数。
+- 可以通过OFFSET指定SELECT语句开始查询的数据偏移量。默认情况下偏移量为0。
+
+**更新数据**
+
+```
+UPDATE table_name SET field1=new-value1, field2=new-value2
+[WHERE Clause]
+```
+
+- 可以同时更新一个或多个字段。
+- 可以在 WHERE 子句中指定任何条件。
+- 可以在一个单独表中同时更新数据。
+
+
+**删除数据**
+
+```
+DELETE FROM table_name [WHERE Clause]
+```
+
+- 果没有指定 WHERE 子句，MySQL 表中的所有记录将被删除。
+- 可以在 WHERE 子句中指定任何条件
+- 可以在单个表中一次性删除记录。
+
+
+
 ## 数据类型
+
+
+## 主键 Primary Key
+
+为了保证某一个字段唯一,不能为空,在一个表中,主键只能有一个
+
+```
+create table Student01(
+SNO int PRIMARY Key,
+SName varchar(20)
+)
+
+
+create table Student02(
+SNO int,
+SName varchar(20),
+CONSTRAINT Pk_SNO PRIMARY Key(SNO)
+)
+
+
+#复合主键
+create table BorrowBook(
+SNO int,
+BookId int,
+BorrowDate date,
+ReturnDate data,
+CONSTRAINT Pk_BorrowBook PRIMARY Key(SNO,BookId)
+)
+```
+
+## 唯一键 Unique
+
+
+
+## 外键 Foreign Key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

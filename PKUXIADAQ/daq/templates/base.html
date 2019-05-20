@@ -1,0 +1,111 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>
+      {% block title %}
+
+      {% endblock %}
+    </title>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script>
+      // 取出传递进来的pageindex
+      page ={{ pageindex }};
+      $(function(){
+          //判断
+          if(page===0){
+              $("#page0").css('background-color',"#FFF") ;
+              $("#page0").css('border-bottom',"5px solid red");
+          } else if (page===1){
+              $("#page1").css('background-color',"#FFF") ;
+              $("#page1").css('border-bottom',"5px solid red");
+          } else if (page===2){
+              $("#page2").css('background-color',"#FFF") ;
+              $("#page2").css('border-bottom',"5px solid red");
+          } else if (page===3){
+              $("#page3").css('background-color',"#FFF") ;
+              $("#page3").css('border-bottom',"5px solid red");
+          }
+      });
+    </script>
+    
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/index.basic.css' %}">
+    
+    {% block css %}
+
+    {% endblock %}
+    {% block js %}
+
+    {% endblock %}
+
+    
+  </head>
+  <body>
+    <div id="header_outer">
+      <div id="header_container">
+        <div id="left">
+          <!-- <div><img src="{% static 'img/logo.png' %}"></div> -->
+	  <div><a href="{% url 'home' %}" ><img src="{% static "img/logo.png" %}"></a></div>
+          <div>
+            <ul>
+              <li><a id='page0' href="{% url 'control' %}">control</a></li>
+	      <li><a id='page1' href="{% url 'offline' %}">offline</a></li>
+	      <li><a id='page2' href="{% url 'online' %}">online</a></li>
+	      <li><a id='page3' href="{% url 'others' %}">others</a></li>
+            </ul>
+	  </div>
+        </div>
+        <div id="right">
+          {% if username == None %}
+          <a href="{% url 'login' %}">Login</a>
+          {% else %}
+          Welcome, {{ username|capfirst }} | <a href="{% url 'home' %}"> Logout </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- <div id="query_container"> -->
+      <!--     <form action="" method="post"> -->
+	<!--         <div style="line-height: 40px;">学号：</div> -->
+	<!--         <div><input type="text" id="sno" name="sno" value="{{ querysno }}" class="form-control" style="width:100px;margin-right: 20px;"></div> -->
+	<!--         <div style="line-height: 40px;">姓名：</div> -->
+	<!--         <div><input type="text" id="name"  class="form-control" style="width:100px;margin-right: 20px"></div> -->
+	<!--         <div style="line-height: 40px;">手机号码：</div> -->
+	<!--         <div><input type="text" id="mobile"  class="form-control" style="width:150px;margin-right: 20px"></div> -->
+	<!--         <div style="line-height: 40px;">邮箱地址：</div> -->
+	<!--         <div><input type="text" id="email" class="form-control" style="width:200px;margin-right: 20px"></div> -->
+	<!--         <div><input type='submit' class="btn" value="查询" id="getresult" style="width:80px;margin-left: 120px;background-color: navy;color:#FFF"></div> -->
+	<!--         <div><input type='submit' class="btn" value="全部" id="getall" style="width:80px;margin-left: 20px;background-color: navy;color:#FFF"></div> -->
+	<!--     </form> -->
+      <!-- </div> -->
+    <!-- <div id="content_container" class="container"> -->
+      <!--     {% for student in students %} -->
+      <!--          <div class="col-lg-2 col-sm-3 col-xs-4"> -->
+	<!--             <div class="thumbnail"> -->
+	  <!--                 {% if student.gender == '男' %} -->
+	  <!--                     <a href="{% url 'detail' %}?sno={{ student.sno}}&username={{ username }}"><img src="{% static 'img/boy.png'%}"></a> -->
+	  <!--                 {% elif student.gender == '女' %} -->
+	  <!--                     <a href="{% url 'detail' %}?sno={{ student.sno }}&username={{ username }}"><img src="{% static 'img/girl.png'%}"></a> -->
+	  <!--                 {% endif %} -->
+
+	  <!--                 <div style="text-align: center"><h4><a href="{% url 'detail' %}?sno={{ student.sno }}&username={{ username }}">{{ student.name }}-{{ student.sno }}</a></h4></div> -->
+	  <!--                 <p></p> -->
+	  <!--             </div> -->
+	<!--         </div> -->
+      <!--     {% endfor %} -->
+      <!-- </div> -->
+
+    {% block content01 %}
+
+    {% endblock %}
+
+    
+
+    <div id="footer_container">
+      PKU XIA DAQ © Hongyi Wu(wuhongyi@qq.com)
+    </div>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+PKUXIADAQ-Others
+{% endblock %}
+
+{% block css %}
+<style>
+  #content01{
+      width: 100%;
+      height: 500px;
+  }
+  #content01>div{
+      width: 1200px;
+      height: 500px;
+      margin:10px auto;
+      background-color:lightcyan;
+      font-size:30px;
+      text-align: center;
+      color:red;
+  }
+</style>
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+
+
+{% block content01 %}
+<div id="content01">
+  <div>其它监视页面的内容</div>
+</div>
+{% endblock %}

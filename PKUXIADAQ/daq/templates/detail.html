@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生详情页</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/detail.basic.css' %}">
+</head>
+<body>
+    <div id="header_outer">
+        <div id="header_container">
+            <div id="left">
+                <div><img src="{% static 'img/logo.png' %}"></div>
+                <div>学员详情</div>
+            </div>
+            <div id="right">
+                {% if username == None %}
+                    <a href="{% url 'login' %}">登录</a>
+                {% else %}
+                    <a href="{% url 'home' %}"> 欢迎您，{{ username|capfirst }} | 注销 </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div id="content_container">
+        <div><img src="{% static 'img/bigpic.png' %}"></div>
+        <div class="detail">
+            <div  class='label'  >学号：</div>
+            <div><input type="text" id="sno" name="sno" value='{{ student.0.sno }}' class="form-control" style="width:100px"></div>
+            <div class='label' >姓名：</div>
+            <div><input type="text" id="sno" name="sno" value='{{ student.0.name }}' class="form-control" style="width:100px"></div>
+            <div class='label'>性别：</div>
+            <div><input type="text" id="sno" name="sno" value='{{ student.0.gender }}' class="form-control" style="width:100px"></div>
+            <div class='label'>出生日期：</div>
+            <div><input type="text" id="sno" name="sno" value='{{ student.0.birthday }}' class="form-control" style="width:300px"></div>
+            <div class='label'>手机号码：</div>
+            <div><input type="text" id="sno" name="sno" value='{{ student.0.mobile }}' class="form-control" style="width:300px;"></div>
+            <div class='label'>邮箱地址：</div>
+            <div><input type="text" id="sno" name="sno" value='{{ student.0.email }}' class="form-control" style="width:350px;"></div>
+            <div class='label'>家庭住址：</div>
+            <div><input type="text" id="sno" name="sno" value='{{ student.0.address }}' class="form-control" style="width:350px;"></div>
+        </div>
+    </div>
+    <div id="footer_container">
+        学生信息管理系统v1.10 @ 版权所有 Steven Wang
+    </div>
+</body>
+</html>
